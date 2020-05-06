@@ -241,7 +241,6 @@ class TransformerDecoder(DecoderBase):
         # attention. But it was never actually used -- the "copy" attention
         # just reuses the context attention.
         self._copy = copy_attn
-        self.layer_norm = nn.LayerNorm(d_model, eps=1e-6)
 
         self.alignment_layer = alignment_layer
 
@@ -322,7 +321,6 @@ class TransformerDecoder(DecoderBase):
             if attn_align is not None:
                 attn_aligns.append(attn_align)
 
-        output = self.layer_norm(output)
         dec_outs = output.transpose(0, 1).contiguous()
         attn = attn.transpose(0, 1).contiguous()
 
